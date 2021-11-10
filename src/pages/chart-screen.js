@@ -115,7 +115,7 @@ export default function ChartScreen() {
                         <Text style={styles.text}>+$ {map} [0.20%]</Text>
                     </View>
                     <View style={styles.chart} >
-                        <LineChart width={width} height={250} >
+                        <LineChart width={width / 1.1} height={250} >
                             <LineChart.Path color="#05c795" />
                         </LineChart>
                     </View>
@@ -136,24 +136,19 @@ export default function ChartScreen() {
 
 
                 <View style={styles.btnContainer}>
+                    <TouchableOpacity style={styles.btn}>
+                        <Text style={styles.btnText}>
+                            Sell
+                        </Text>
+                    </TouchableOpacity>
 
-                    <View style={styles.btn}>
-                        <Button
-                            title="Sell"
-                            color="#05c795"
-                            height="30"
-                            maxHeight="30"
-                        />
-                    </View>
 
-                    <View style={styles.btn}>
-                        <Button
-                            title="Buy"
-                            color="#05c795"
-                            height="30"
-                            maxHeight="30"
-                        />
-                    </View>
+                    <TouchableOpacity style={styles.btn}>
+                        <Text style={styles.btnText}>
+                            Buy
+                        </Text>
+                    </TouchableOpacity>
+
                 </View>
 
                 <View style={styles.details}>
@@ -238,14 +233,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         marginTop: 20,
+        width: '100%',
 
     },
 
     btn: {
-        width: 160,
+
+        width: width / 2.4,
+        backgroundColor: '#05c795',
+        height: 40,
+        maxHeight: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 2
 
     },
-
+    btnText:{
+        color: 'white',
+        fontSize: fontScale * 14,
+        letterSpacing: 1
+    },
     details: {
         flex: 1,
         flexDirection: 'row',
