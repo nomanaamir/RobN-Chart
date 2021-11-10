@@ -94,78 +94,81 @@ export default function ChartScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
-                <LineChart.Provider data={data}>
-                    <View style={styles.heading}>
-                        <View style={styles.price}>
-                            <LineChart.PriceText
-                                style={{
-                                    color: "white",
-                                    fontSize: 70,
-                                    fontWeight: "normal",
-                                }}
-                                format={({ value }) => {
-                                    'worklet';
-                                    const formattedPrice = PriceText(value);
-                                    return `${formattedPrice} `;
 
-                                }}
-                            />
-                            <Text style={styles.currency}> GNF </Text>
+                <View style={styles.chartConatiner}>
+                    <LineChart.Provider data={data}>
+                        <View style={styles.heading}>
+                            <View style={styles.price}>
+                                <LineChart.PriceText
+                                    style={{
+                                        color: "white",
+                                        fontSize: 70,
+                                        fontWeight: "normal",
+                                    }}
+                                    format={({ value }) => {
+                                        'worklet';
+                                        const formattedPrice = PriceText(value);
+                                        return `${formattedPrice} `;
+
+                                    }}
+                                />
+                                <Text style={styles.currency}> GNF </Text>
+                            </View>
+                            <Text style={styles.text}>+$ {map} [0.20%]</Text>
                         </View>
-                        <Text style={styles.text}>+$ {map} [0.20%]</Text>
+                        <View style={styles.chart} >
+                            <LineChart width={width} height={250} >
+                                <LineChart.Path color="#05c795" />
+                            </LineChart>
+                        </View>
+                    </LineChart.Provider>
+                    <View style={styles.tabs}>
+
+                        {
+                            tabs.map((item, index) => {
+                                return (
+                                    <TouchableOpacity key={index} style={[styles.tab, activeTab === index ? activeTabBorder : null]} onPress={() => changeTab(index)}>
+                                        <Text style={[styles.tabsTexts, activeTab === index ? activeText : null]}>{item.name}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
                     </View>
-                    <View style={styles.chart} >
-                        <LineChart width={width / 1.1} height={250} >
-                            <LineChart.Path color="#05c795" />
-                        </LineChart>
+
+
+
+                    <View style={styles.btnContainer}>
+                        <TouchableOpacity style={styles.btn}>
+                            <Text style={styles.btnText}>
+                                Sell
+                            </Text>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={styles.btn}>
+                            <Text style={styles.btnText}>
+                                Buy
+                            </Text>
+                        </TouchableOpacity>
+
                     </View>
-                </LineChart.Provider>
-                <View style={styles.tabs}>
 
-                    {
-                        tabs.map((item, index) => {
-                            return (
-                                <TouchableOpacity key={index} style={[styles.tab, activeTab === index ? activeTabBorder : null]} onPress={() => changeTab(index)}>
-                                    <Text style={[styles.tabsTexts, activeTab === index ? activeText : null]}>{item.name}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
-                </View>
+                    <View style={styles.details}>
 
+                        {
+                            details.map((item, index) => {
+                                return (
+                                    <View key={index} >
+                                        <View>
+                                            <Text style={styles.detailBoxtitle}>{item.title}</Text>
+                                            <Text style={styles.detailBoxlabel}>{item.label}</Text>
 
-
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.btn}>
-                        <Text style={styles.btnText}>
-                            Sell
-                        </Text>
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style={styles.btn}>
-                        <Text style={styles.btnText}>
-                            Buy
-                        </Text>
-                    </TouchableOpacity>
-
-                </View>
-
-                <View style={styles.details}>
-
-                    {
-                        details.map((item, index) => {
-                            return (
-                                <View key={index} >
-                                    <View style={styles.detailBox}>
-                                        <Text style={styles.detailBoxtitle}>{item.title}</Text>
-                                        <Text style={styles.detailBoxlabel}>{item.label}</Text>
-
+                                        </View>
                                     </View>
-                                </View>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </View>
                 </View>
 
             </ScrollView>
@@ -178,14 +181,13 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#030c15',
         flex: 1,
-        paddingTop: 10,
-        paddingBottom: 10
     },
     chartConatiner: {
-        width: '100%'
+        height: height
+
     },
     heading: {
-        flex: 1,
+        height: height / 4,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: '#030c15',
@@ -208,7 +210,6 @@ const styles = StyleSheet.create({
     chart: {
         borderBottomWidth: 1,
         borderColor: 'white',
-        borderStyle: 'dashed',
 
     },
 
@@ -216,7 +217,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: "space-around",
-        marginTop: 20
+        alignItems: 'center',
+        maxHeight: 60
 
     },
     tab: {
@@ -232,8 +234,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-around",
-        marginTop: 20,
         width: '100%',
+        alignItems: 'center',
+        maxHeight: 80
 
     },
 
@@ -248,35 +251,28 @@ const styles = StyleSheet.create({
         borderRadius: 2
 
     },
-    btnText:{
+    btnText: {
         color: 'white',
         fontSize: fontScale * 14,
         letterSpacing: 1
     },
     details: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: "space-around",
-        marginTop: 20,
         borderColor: '#2e353f',
         borderBottomWidth: 1,
         borderTopWidth: 1,
-        padding: 10
-    },
-
-    detailBox: {
-        flex: 1
+        height: height / 8,
+        alignItems: 'center',
     },
 
     detailBoxtitle: {
         color: "white",
         fontSize: fontScale * 20,
-        fontFamily: 'sans-serif-thin'
     },
 
     detailBoxlabel: {
         color: "#8e959d",
         fontSize: fontScale * 11,
-        fontFamily: 'sans-serif-thin'
     }
 });
