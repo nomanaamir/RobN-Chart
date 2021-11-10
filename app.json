@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "gold-chart",
+    "slug": "gold-chart",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "gold-chart"
+}
