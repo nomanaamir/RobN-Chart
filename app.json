@@ -5,7 +5,13 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.robnchart"
+    },
+    "ios": {
+      "bundleIdentifier": "com.robnchart"
+    }
   },
   "name": "gold-chart"
 }
