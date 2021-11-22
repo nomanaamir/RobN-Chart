@@ -37,6 +37,50 @@ export default function ChartScreen() {
     ]
     const map = [data.timestamp].map(timestamp => 100 * Math.floor(Math.random() * 10000));
 
+    const [theme, setTheme] = useState('sell');
+
+
+
+    const sellThemeColor = {
+        color: '#0047AB'
+    }
+
+    const buyThemeColor = {
+        color: 'orange'
+    }
+
+    const sellThemeBackgroundColor = {
+
+        backgroundColor: '#030c15',
+    }
+
+    const buyThemeBackgroundColor = {
+
+        backgroundColor: 'white',
+    }
+
+    const sellDetailBackground = {
+
+        backgroundColor: '#2e353f',
+    }
+
+    const buyDetailBackground = {
+
+        backgroundColor: '#FCF5E5',
+    }
+
+    const sellchart = {
+
+        borderBottomWidth: 1,
+        borderColor: 'white',
+    }
+
+    const buychart = {
+
+        borderBottomWidth: 1,
+        borderColor: 'black',
+    }
+
 
     const [activeTab, setActiveTab] = useState(0);
 
@@ -65,46 +109,40 @@ export default function ChartScreen() {
         },
     ]
 
-    const details = [
-        {
-            title: "11",
-            label: "YOUR SHARES"
-        },
-        {
-            title: "1,053.80",
-            label: "EQUITY VALUE $"
-        },
-        {
-            title: "89.10",
-            label: "AVG COST %"
-        },
-    ]
-    const activeTabBorder = {
-        borderColor: '#05c795',
+
+    const activeBlueBorder = {
+        borderColor: '#0047AB',
         borderBottomWidth: 1
     }
-    const activeText = {
+
+    const activeOrangeBorder = {
+        borderColor: 'orange',
+        borderBottomWidth: 1
+    }
+
+    const activeWhiteFont = {
         color: 'white'
+    }
+    const activeBlackFont = {
+        color: 'black'
     }
     function PriceText(value) {
         'worklet';
         return (value = Math.floor(Math.random() * 100));
 
     }
+    console.log(theme)
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
 
-                <View style={styles.chartConatiner}>
+                <View style={[styles.chartConatiner, theme === 'sell' ? sellThemeBackgroundColor : buyThemeBackgroundColor]}>
                     <LineChart.Provider data={data}>
                         <View style={styles.heading}>
                             <View style={styles.price}>
                                 <LineChart.PriceText
-                                    style={{
-                                        color: "white",
-                                        fontSize: 70,
-                                        fontWeight: "normal",
-                                    }}
+                            
+                                    style={[styles.priceText, theme === 'sell' ? sellThemeColor : buyThemeColor]}
                                     format={({ value }) => {
                                         'worklet';
                                         const formattedPrice = PriceText(value);
@@ -112,13 +150,13 @@ export default function ChartScreen() {
 
                                     }}
                                 />
-                                <Text style={styles.currency}> GNF </Text>
+                                <Text  style={[styles.currency, theme === 'sell' ? sellThemeColor : buyThemeColor]}> GNF </Text>
                             </View>
-                            <Text style={styles.text}>+$ {map} [0.20%]</Text>
+                            <Text style={[styles.text, theme === 'sell' ? sellThemeColor : buyThemeColor]}>+$ {map} [0.20%]</Text>
                         </View>
-                        <View style={styles.chart} >
+                        <View  style={[theme === 'sell' ? sellchart : buychart]} >
                             <LineChart width={width} height={250} >
-                                <LineChart.Path color="#05c795" />
+                                <LineChart.Path color={theme === 'sell' ? '#0047AB' : 'orange'} />
                             </LineChart>
                         </View>
                     </LineChart.Provider>
@@ -127,8 +165,8 @@ export default function ChartScreen() {
                         {
                             tabs.map((item, index) => {
                                 return (
-                                    <TouchableOpacity key={index} style={[styles.tab, activeTab === index ? activeTabBorder : null]} onPress={() => changeTab(index)}>
-                                        <Text style={[styles.tabsTexts, activeTab === index ? activeText : null]}>{item.name}</Text>
+                                    <TouchableOpacity key={index} style={[styles.tab,  activeTab === index ? (theme === 'sell' ? activeBlueBorder : activeOrangeBorder) : null]} onPress={() => changeTab(index)}>
+                                        <Text style={[theme === 'sell' ? sellThemeColor : buyThemeColor, activeTab === index ? (theme === 'sell' ? activeWhiteFont : activeBlackFont) : null]}>{item.name}</Text>
                                     </TouchableOpacity>
                                 )
                             })
@@ -138,14 +176,14 @@ export default function ChartScreen() {
 
 
                     <View style={styles.btnContainer}>
-                        <TouchableOpacity style={styles.btn}>
+                        <TouchableOpacity style={styles.btn} onPress={() => setTheme('sell')}>
                             <Text style={styles.btnText}>
                                 Sell
                             </Text>
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity style={styles.btn}>
+                        <TouchableOpacity style={styles.btn} onPress={() => setTheme('buy')}>
                             <Text style={styles.btnText}>
                                 Buy
                             </Text>
@@ -153,21 +191,9 @@ export default function ChartScreen() {
 
                     </View>
 
-                    <View style={styles.details}>
+                    <View  style={[styles.details, theme === 'sell' ? sellDetailBackground : buyDetailBackground]}>
 
-                        {
-                            details.map((item, index) => {
-                                return (
-                                    <View key={index} >
-                                        <View>
-                                            <Text style={styles.detailBoxtitle}>{item.title}</Text>
-                                            <Text style={styles.detailBoxlabel}>{item.label}</Text>
-
-                                        </View>
-                                    </View>
-                                )
-                            })
-                        }
+                        <Text  style={[styles.detailBoxlabel, theme === 'sell' ? sellThemeColor : buyThemeColor]}>Conakry Index</Text>
                     </View>
                 </View>
 
@@ -190,7 +216,7 @@ const styles = StyleSheet.create({
         height: height / 4,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: '#030c15',
+        // backgroundColor: '#030c15',
 
     },
     text: {
@@ -203,15 +229,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
     },
+
+    priceText:{
+        fontSize: 70,
+        fontWeight: "normal",
+
+    },
     currency: {
         color: "white",
         alignItems: "center",
     },
-    chart: {
-        borderBottomWidth: 1,
-        borderColor: 'white',
 
-    },
 
     tabs: {
         flex: 1,
@@ -226,9 +254,7 @@ const styles = StyleSheet.create({
         paddingRight: 8,
         paddingLeft: 8,
     },
-    tabsTexts: {
-        color: "#05c795"
-    },
+
 
     btnContainer: {
         flex: 1,
@@ -259,20 +285,15 @@ const styles = StyleSheet.create({
     details: {
         flexDirection: 'row',
         justifyContent: "space-around",
-        borderColor: '#2e353f',
         borderBottomWidth: 1,
         borderTopWidth: 1,
         height: height / 8,
         alignItems: 'center',
     },
 
-    detailBoxtitle: {
-        color: "white",
-        fontSize: fontScale * 20,
-    },
 
     detailBoxlabel: {
-        color: "#8e959d",
-        fontSize: fontScale * 11,
+        color: "white",
+        fontSize: fontScale * 20,
     }
 });
