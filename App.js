@@ -13,10 +13,10 @@ function MyDrawer() {
       screenOptions={{
         activeTintColor: '#e91e63',
       }}>
-      <Drawer.Screen name="goldPrice" component={ChartScreen} options={{
-        drawerLabel: 'Gold Price',
-        headerTitle: 'ROB.N',
-        headerTintColor: '#05c795',
+      <Drawer.Screen name="Conakry Index" component={ChartScreen} options={{
+        drawerLabel: 'Conakry Index',
+        headerTitle: 'Dollar',
+        headerTintColor: '#e2eafc',
         headerTitleAlign: "center",
         headerTitleStyle: { color: "white" },
         headerStyle: {

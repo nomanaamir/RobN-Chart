@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "gold-chart",
-    "slug": "gold-chart",
+    "name": "Conakry Index",
+    "icon": "./assets/ic_launcher.png",
+    "slug": "Conakry-Index",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "com.robnchart"
+
     },
     "ios": {
       "bundleIdentifier": "com.robnchart"
     }
   },
-  "name": "gold-chart"
+  "name": "Conakry-Index"
 }
